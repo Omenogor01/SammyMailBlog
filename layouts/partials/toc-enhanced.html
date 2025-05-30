@@ -1,0 +1,248 @@
+{{ if .Page.TableOfContents }}
+<aside class="toc-container bg-gray-50 dark:bg-gray-800 rounded-lg p-6 mb-8 lg:sticky lg:top-6">
+  <div class="toc-content">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
+        <svg class="w-5 h-5 mr-2 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+        Table of Contents
+      </h3>
+      <button id="toc-toggle" class="lg:hidden text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" aria-label="Toggle table of contents">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
+    </div>
+    
+    <div id="toc-content" class="toc-list">
+      {{ .Page.TableOfContents | replaceRE "<ul>" "<ul class='space-y-2'>" | safeHTML }}
+    </div>
+    
+    <div class="toc-progress hidden lg:block mt-4">
+      <div class="h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+        <div id="toc-progress-bar" class="h-full bg-blue-600 dark:bg-blue-500 w-0"></div>
+      </div>
+      <p class="text-xs text-right mt-1 text-gray-500 dark:text-gray-400">
+        <span id="toc-progress-text">0%</span> read
+      </p>
+    </div>
+  </div>
+</aside>
+
+<style>
+  .toc-container {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    transition: all 0.2s ease;
+  }
+  
+  .dark .toc-container {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+  }
+  
+  .toc-list ul {
+    margin-left: 1rem;
+  }
+  
+  .toc-list a {
+    color: #374151;
+    font-size: 0.875rem;
+    line-height: 1.625;
+    display: block;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 200ms;
+  }
+  
+  .dark .toc-list a {
+    color: #d1d5db;
+  }
+  
+  .toc-list a:hover {
+    color: #2563eb;
+  }
+  
+  .dark .toc-list a:hover {
+    color: #60a5fa;
+  }
+  
+  .toc-list li {
+    position: relative;
+    padding-left: 0.5rem;
+  }
+  
+  .toc-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0.25rem;
+    height: 0.25rem;
+    background-color: #d1d5db;
+    border-radius: 9999px;
+    transform: translateY(-50%);
+  }
+  
+  .dark .toc-list li::before {
+    background-color: #4b5563;
+  }
+  
+  .toc-list li.active > a {
+    color: #2563eb;
+    font-weight: 500;
+  }
+  
+  .dark .toc-list li.active > a {
+    color: #60a5fa;
+  }
+  
+  .toc-list li.active::before {
+    background-color: #2563eb;
+    width: 0.375rem;
+    height: 0.375rem;
+    margin-left: -0.125rem;
+  }
+  
+  .dark .toc-list li.active::before {
+    background-color: #60a5fa;
+  }
+  
+  @media (max-width: 1023px) {
+    .toc-list {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    
+    .toc-list.expanded {
+      max-height: 1000px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const toc = document.querySelector('.toc-list');
+    const toggleButton = document.getElementById('toc-toggle');
+    const progressBar = document.getElementById('toc-progress-bar');
+    const progressText = document.getElementById('toc-progress-text');
+    
+    // Toggle mobile menu
+    if (toggleButton) {
+      toggleButton.addEventListener('click', function() {
+        toc.classList.toggle('expanded');
+        this.querySelector('svg').classList.toggle('rotate-180');
+      });
+    }
+    
+    // Update active TOC item while scrolling
+    if (toc && progressBar && progressText) {
+      const headings = Array.from(document.querySelectorAll('h2, h3'));
+      const tocLinks = Array.from(toc.querySelectorAll('a'));
+      const article = document.querySelector('.post-content') || document.querySelector('article');
+      
+      // Expand TOC by default on mobile if it's the only content
+      if (window.innerWidth < 1024) {
+        toc.classList.add('expanded');
+      }
+      
+      // Update progress bar
+      function updateProgress() {
+        if (!article) return;
+        
+        const articleHeight = article.offsetHeight;
+        const windowHeight = window.innerHeight;
+        const scrollPosition = window.scrollY;
+        const progress = (scrollPosition / (articleHeight - windowHeight)) * 100;
+        
+        progressBar.style.width = Math.min(100, Math.max(0, progress)) + '%';
+        progressText.textContent = Math.round(progress) + '% read';
+      }
+      
+      // Update active TOC item
+      function updateActiveTocItem() {
+        if (headings.length === 0) return;
+        
+        let currentActive = null;
+        const scrollPosition = window.scrollY + 100;
+        
+        headings.forEach((heading, index) => {
+          const headingTop = heading.offsetTop;
+          
+          if (scrollPosition >= headingTop) {
+            currentActive = index;
+          }
+        });
+        
+        tocLinks.forEach((link, index) => {
+          const listItem = link.parentElement;
+          
+          if (index === currentActive) {
+            listItem.classList.add('active');
+            // Scroll to active item if it's not in view
+            if (toc.scrollHeight > toc.clientHeight) {
+              const linkTop = link.getBoundingClientRect().top;
+              const tocTop = toc.getBoundingClientRect().top;
+              const tocBottom = toc.getBoundingClientRect().bottom;
+              const linkHeight = link.offsetHeight;
+              
+              if (linkTop < tocTop + 50 || linkTop > tocBottom - 50) {
+                toc.scrollTo({
+                  top: link.offsetTop - toc.offsetTop - 100,
+                  behavior: 'smooth'
+                });
+              }
+            }
+          } else {
+            listItem.classList.remove('active');
+          }
+        });
+      }
+      
+      // Smooth scroll for TOC links
+      tocLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+          
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 80,
+              behavior: 'smooth'
+            });
+            
+            // Update URL without page jump
+            history.pushState(null, '', targetId);
+          }
+        });
+      });
+      
+      // Initial update
+      updateProgress();
+      updateActiveTocItem();
+      
+      // Update on scroll
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            updateProgress();
+            updateActiveTocItem();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+      
+      // Update on resize
+      window.addEventListener('resize', () => {
+        updateProgress();
+        updateActiveTocItem();
+      });
+    }
+  });
+</script>
+{{ end }}

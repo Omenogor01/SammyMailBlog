@@ -1,7 +1,18 @@
-baseURL = 'https://sammymail.blog/'
+baseURL = 'https://Omen-og-or.com/'
 languageCode = 'en-us'
 title = 'SammyMail | Email Technology Insights'
 theme = 'PaperMod'
+
+# Site identity
+title = 'SammyMail'
+description = 'Expert insights on email technology, deliverability, and authentication'
+
+# Author information
+[author]
+  name = 'Sammy'
+  email = 'contact@sammymail.com'
+  bio = 'Email technology expert and consultant'
+  avatar = '/images/avatar.jpg'  # Add your avatar image to static/images/avatar.jpg
 
 # Site settings
 [pagination]
@@ -10,8 +21,29 @@ theme = 'PaperMod'
 # Enable features
 enableRobotsTXT = true
 enableEmoji = true
+enableGitInfo = true
 pygmentsCodeFences = true
 pygmentsUseClasses = true
+disableKinds = ['taxonomy', 'term']
+canonifyURLs = true
+
+# Image processing
+[imaging]
+  quality = 80
+  resampleFilter = 'CatmullRom'
+  anchor = 'smart'
+  
+[mediaTypes]
+  [mediaTypes.'image/webp']
+    suffixes = ['webp']
+  
+[outputFormats]
+  [outputFormats.WebP]
+    mediaType = 'image/webp'
+    isPlainText = false
+    isHTMLDocument = false
+    permalinkable = false
+    weight = 100
 
 # Build settings
 buildDrafts = false
@@ -41,6 +73,46 @@ buildExpired = false
   defaultTheme = 'light'  # Default theme for auto mode
   homeInfoParams = { Title = "Email Technology Expert", Content = "Insights, tutorials, and best practices for email technology professionals" }
   
+  # Social links
+  [params.social]
+    twitter = 'https://twitter.com/sammymail'
+    github = 'https://github.com/sammymail'
+    linkedin = 'https://linkedin.com/company/sammymail'
+    email = 'contact@sammymail.com'
+    
+  # SEO settings
+  [params.seo]
+    twitter = '@sammymail'
+    opengraph = true
+    schema = true
+    
+  # Comments (uncomment and configure as needed)
+  # [params.comments]
+  #   enabled = true
+  #   provider = 'disqus'  # or 'utterances', 'giscus', etc.
+  #   disqusShortname = 'your-disqus-shortname'
+  
+  # Newsletter configuration
+  [params.newsletter]
+    enable = true
+    provider = 'mailchimp'  # or 'convertkit', 'revue', etc.
+    mailchimpAction = 'https://your-mailchimp-form-action'
+    mailchimpName = 'YOUR_MAILCHIMP_FORM_NAME'
+    
+  # Table of contents
+  [params.toc]
+    enable = true
+    number = true
+    auto = true
+    keepStatic = false
+    
+  # Related content
+  [params.related]
+    enable = true
+    threshold = 80
+    includeNewer = true
+    toLower = false
+  
   # Display settings
   ShowReadingTime = true
   ShowWordCount = true
@@ -49,6 +121,35 @@ buildExpired = false
   ShowRssButtonInSectionTermList = true
   ShowAllPagesInArchive = true
   ShowPageNums = true
+  
+  # Post navigation
+  [params.postNavigation]
+    enable = true
+    prevText = 'Previous'
+    nextText = 'Next'
+    
+  # Analytics
+  [params.analytics]
+    enable = false
+    googleAnalytics = 'UA-XXXXX-X'  # Your Google Analytics ID
+    plausibleAnalytics = ''  # Your Plausible domain
+    
+  # Search configuration
+  [params.search]
+    enable = true
+    type = 'fusejs'  # or 'algolia', 'lunr'
+    contentLocation = 'content/'
+    fuseJsOptions = '{ "keys": ["title", "summary", "content"] }'
+    
+  # Custom CSS/JS
+  customCSS = ['css/custom.css']
+  customJS = ['js/custom.js']
+  
+  # Extensions
+  [params.extensions]
+    mermaid = true  # Enable Mermaid.js for diagrams
+    katex = true    # Enable KaTeX for math typesetting
+    lazySizes = true # Enable lazy loading for images
   ShowBreadCrumbs = true
   
   # SEO settings
@@ -70,8 +171,8 @@ buildExpired = false
   # Custom CSS
   customCSS = ['css/custom.css']
   
-  # Analytics (uncomment and add your own)
-  # googleAnalytics = 'UA-XXXXXXXXX-X'
+  # Analytics
+  googleAnalytics = 'G-D1FJRJDPGC'
   # plausibleAnalytics = 'your-domain.com'
   
   # Comments (uncomment and configure as needed)

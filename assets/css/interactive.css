@@ -1,0 +1,211 @@
+/* ===== SCROLL PROGRESS BAR ===== */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    z-index: 1000;
+    transition: width 0.1s ease-out;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+/* ===== DARK MODE TOGGLE ===== */
+.dark-mode-toggle {
+    background: none;
+    border: none;
+    color: var(--text);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.dark-mode-toggle:hover {
+    background: var(--gray-100);
+}
+
+.dark .dark-mode-toggle:hover {
+    background: var(--gray-800);
+}
+
+.dark-mode-toggle svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    transition: transform 0.3s ease;
+}
+
+.dark-mode-toggle[aria-pressed="true"] .moon-icon,
+.dark-mode-toggle[aria-pressed="false"] .sun-icon {
+    display: none;
+}
+
+.dark-mode-toggle[aria-pressed="true"] .sun-icon,
+.dark-mode-toggle[aria-pressed="false"] .moon-icon {
+    display: block;
+}
+
+/* ===== CODE BLOCKS ===== */
+.code-block-wrapper {
+    position: relative;
+    margin: 1.5rem 0;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.copy-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.25rem;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.code-block-wrapper:hover .copy-button {
+    opacity: 1;
+}
+
+.copy-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.copy-button.copied {
+    background: #10b981;
+    color: white;
+}
+
+.copy-button svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* ===== RESPONSIVE TABLES ===== */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    -webkit-overflow-scrolling: touch;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+}
+
+th, td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.dark th,
+.dark td {
+    border-bottom-color: var(--gray-700);
+}
+
+th {
+    background: var(--gray-50);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    color: var(--gray-600);
+}
+
+.dark th {
+    background: var(--gray-800);
+    color: var(--gray-300);
+}
+
+/* ===== LAZY LOADING ===== */
+img.lazy {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+img.lazy.loaded {
+    opacity: 1;
+}
+
+/* ===== FOCUS STYLES ===== */
+.user-is-tabbing *:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+    .no-print,
+    .dark-mode-toggle,
+    .copy-button,
+    .scroll-progress,
+    header,
+    footer {
+        display: none !important;
+    }
+    
+    body {
+        font-size: 12pt;
+        line-height: 1.5;
+        color: #000;
+        background: #fff;
+    }
+    
+    a {
+        color: #000;
+        text-decoration: none;
+    }
+    
+    a[href^="http"]::after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+        color: #666;
+    }
+    
+    .post-content {
+        max-width: 100%;
+        padding: 0;
+    }
+    
+    pre, code {
+        white-space: pre-wrap !important;
+        page-break-inside: avoid;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        page-break-after: avoid;
+    }
+    
+    img, table, pre {
+        page-break-inside: avoid;
+    }
+    
+    article {
+        page-break-before: auto;
+    }
+    
+    @page {
+        margin: 2cm;
+    }
+}

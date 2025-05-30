@@ -1,0 +1,282 @@
+/* Dark Mode Styles */
+:root {
+  --dark-bg: #1a1a1a;
+  --dark-text: #e0e0e0;
+  --dark-text-muted: #a0a0a0;
+  --dark-border: #333;
+  --dark-card-bg: #252525;
+  --dark-card-hover: #2e2e2e;
+  --dark-header-bg: rgba(26, 26, 26, 0.9);
+  --dark-code-bg: #2d2d2d;
+  --dark-code-text: #f0f0f0;
+  --dark-inline-code-bg: #333;
+  --dark-inline-code-text: #e0e0e0;
+  --dark-blockquote-border: #4a4a4a;
+  --dark-blockquote-bg: #2a2a2a;
+  --dark-table-bg: #252525;
+  --dark-table-header: #333;
+  --dark-table-border: #3a3a3a;
+  --dark-hr: #3a3a3a;
+  --dark-selection: rgba(59, 130, 246, 0.3);
+}
+
+/* Dark mode styles */
+.dark {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+}
+
+.dark body {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+}
+
+.dark .header {
+  background-color: var(--dark-header-bg);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.dark .nav-links a {
+  color: var(--dark-text);
+}
+
+.dark .nav-links a:hover {
+  color: var(--primary);
+}
+
+.dark .dark-mode-toggle {
+  color: var(--dark-text);
+}
+
+.dark .dark-mode-toggle:hover {
+  background-color: var(--dark-card-hover);
+}
+
+/* Code blocks */
+.dark pre[class*="language-"],
+.dark code[class*="language-"] {
+  background-color: var(--dark-code-bg);
+  color: var(--dark-code-text);
+}
+
+.dark :not(pre) > code[class*="language-"] {
+  background-color: var(--dark-inline-code-bg);
+  color: var(--dark-inline-code-text);
+}
+
+/* Typography */
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6 {
+  color: var(--dark-text);
+}
+
+.dark a {
+  color: var(--primary);
+}
+
+.dark a:hover {
+  color: var(--primary-light);
+}
+
+/* Cards */
+.dark .card {
+  background-color: var(--dark-card-bg);
+  border-color: var(--dark-border);
+}
+
+.dark .card:hover {
+  background-color: var(--dark-card-hover);
+  border-color: var(--primary);
+}
+
+/* Tables */
+.dark table {
+  border-color: var(--dark-table-border);
+}
+
+.dark th {
+  background-color: var(--dark-table-header);
+  color: var(--dark-text);
+}
+
+.dark td {
+  border-color: var(--dark-table-border);
+}
+
+dark tr:nth-child(even) {
+  background-color: var(--dark-table-bg);
+}
+
+/* Blockquotes */
+.dark blockquote {
+  border-left: 4px solid var(--dark-blockquote-border);
+  background-color: var(--dark-blockquote-bg);
+  color: var(--dark-text-muted);
+}
+
+/* Horizontal rule */
+.dark hr {
+  border-color: var(--dark-hr);
+}
+
+/* Forms */
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: var(--dark-card-bg);
+  border-color: var(--dark-border);
+  color: var(--dark-text);
+}
+
+.dark input:focus,
+.dark textarea:focus,
+.dark select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* Buttons */
+.dark .btn {
+  background-color: var(--dark-card-bg);
+  color: var(--dark-text);
+  border-color: var(--dark-border);
+}
+
+.dark .btn:hover {
+  background-color: var(--dark-card-hover);
+  border-color: var(--primary);
+}
+
+/* Navigation */
+.dark .menu {
+  background-color: var(--dark-card-bg);
+  border-color: var(--dark-border);
+}
+
+/* Footer */
+.dark .footer {
+  background-color: var(--dark-card-bg);
+  color: var(--dark-text-muted);
+  border-top: 1px solid var(--dark-border);
+}
+
+/* Selection */
+.dark ::selection {
+  background-color: var(--dark-selection);
+  color: var(--dark-text);
+}
+
+/* Tooltips */
+.dark .tooltip {
+  background-color: var(--dark-card-bg);
+  color: var(--dark-text);
+  border: 1px solid var(--dark-border);
+}
+
+/* Pagination */
+.dark .pagination a {
+  background-color: var(--dark-card-bg);
+  color: var(--dark-text);
+  border-color: var(--dark-border);
+}
+
+.dark .pagination a:hover {
+  background-color: var(--dark-card-hover);
+  border-color: var(--primary);
+}
+
+.dark .pagination .active a {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+/* Tags */
+.dark .tag {
+  background-color: var(--dark-card-bg);
+  color: var(--dark-text);
+  border: 1px solid var(--dark-border);
+}
+
+.dark .tag:hover {
+  background-color: var(--dark-card-hover);
+  border-color: var(--primary);
+}
+
+/* Code copy button */
+.dark .copy-button {
+  background-color: rgba(45, 45, 45, 0.8);
+  border-color: var(--dark-border);
+}
+
+.dark .copy-button:hover {
+  background-color: rgba(59, 130, 246, 0.8);
+}
+
+/* Search */
+.dark .search-input {
+  background-color: var(--dark-card-bg);
+  color: var(--dark-text);
+  border-color: var(--dark-border);
+}
+
+.dark .search-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* Toggle switch */
+.dark .toggle-switch {
+  background-color: var(--dark-card-bg);
+  border-color: var(--dark-border);
+}
+
+.dark .toggle-switch:before {
+  background-color: var(--dark-text);
+}
+
+/* Social icons */
+.dark .social-icon {
+  color: var(--dark-text);
+}
+
+.dark .social-icon:hover {
+  color: var(--primary);
+}
+
+/* Scrollbar */
+.dark ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: var(--dark-card-bg);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 5px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Print styles for dark mode */
+@media print {
+  .dark {
+    background-color: white !important;
+    color: black !important;
+  }
+  
+  .dark * {
+    background-color: white !important;
+    color: black !important;
+    border-color: #ddd !important;
+  }
+}

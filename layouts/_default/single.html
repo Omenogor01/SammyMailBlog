@@ -1,0 +1,101 @@
+{{ define "main" }}
+<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <header class="mb-12">
+    <div class="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400 mb-4">
+      <time datetime="{{ .Date.Format "2006-01-02" }}" class="flex items-center">
+        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+        </svg>
+        {{ .Date.Format "January 2, 2006" }}
+      </time>
+      <span class="flex items-center">
+        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        {{ .ReadingTime }} min read
+      </span>
+      {{ with .Params.categories }}
+      <a href="{{ "/categories/" | relLangURL }}{{ . | urlize }}" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+        {{ . }}
+      </a>
+      {{ end }}
+    </div>
+    
+    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">{{ .Title }}</h1>
+    
+    {{ with .Params.description }}
+    <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">{{ . }}</p>
+    {{ end }}
+    
+    {{ if .Params.featured_image }}
+    <div class="rounded-xl overflow-hidden shadow-xl mb-8">
+      {{ $image := resources.Get .Params.featured_image }}
+      {{ if $image }}
+        {{ $image := $image.Fit "1200x630" }}
+        <img 
+          src="{{ $image.RelPermalink }}" 
+          alt="{{ .Title }}" 
+          class="w-full h-auto"
+          loading="lazy"
+        >
+      {{ else }}
+        <img 
+          src="{{ .Params.featured_image }}" 
+          alt="{{ .Title }}"
+          class="w-full h-auto"
+          loading="lazy"
+        >
+      {{ end }}
+    </div>
+    {{ end }}
+  </header>
+  
+  <div class="flex flex-col lg:flex-row gap-12">
+    <!-- Main Content -->
+    <div class="lg:w-2/3">
+      <!-- Table of Contents (Mobile) -->
+      <div class="lg:hidden mb-8">
+        {{ partial "toc-enhanced.html" . }}
+      </div>
+      
+      <!-- Article Content -->
+      <div class="prose dark:prose-invert max-w-none">
+        {{ .Content }}
+      </div>
+      
+      <!-- Tags -->
+      {{ with .Params.tags }}
+      <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+        <div class="flex flex-wrap gap-2">
+          {{ range . }}
+          <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}" class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 transition-colors duration-200">
+            #{{ . }}
+          </a>
+          {{ end }}
+        </div>
+      </div>
+      {{ end }}
+      
+      <!-- Social Sharing -->
+      {{ partial "social-sharing.html" . }}
+      
+      <!-- Author Bio -->
+      {{ partial "author-bio.html" . }}
+      
+      <!-- Related Posts -->
+      {{ partial "related-posts-enhanced.html" . }}
+      
+      <!-- Newsletter Signup -->
+      {{ partial "newsletter-enhanced.html" . }}
+    </div>
+    
+    <!-- Sidebar -->
+    <aside class="lg:w-1/3 lg:pl-8">
+      <!-- Table of Contents (Desktop) -->
+      <div class="sticky top-24 hidden lg:block">
+        {{ partial "toc-enhanced.html" . }}
+      </div>
+    </aside>
+  </div>
+</article>
+{{ end }}

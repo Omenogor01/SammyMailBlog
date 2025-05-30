@@ -1,0 +1,116 @@
+<!-- Professional Header Component -->
+<header class="header">
+  <div class="header-container">
+    <!-- Logo -->
+    <a href="{{ .Site.BaseURL }}" class="nav-brand">
+      {{- if .Site.Params.logo }}
+        {{ $logo := resources.Get .Site.Params.logo }}
+        {{ if $logo }}
+          <img src="{{ $logo.RelPermalink }}" alt="{{ .Site.Title }}" class="logo-img" width="40" height="40" loading="lazy">
+        {{ end }}
+      {{ end }}
+      <span class="site-title">{{ .Site.Title }}</span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="nav-links" id="main-navigation">
+      {{ $currentPage := . }}
+      {{ range .Site.Menus.main }}
+        {{ if .HasChildren }}
+          <div class="dropdown">
+            <a href="{{ .URL }}" class="{{ if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }}active{{ end }}">
+              {{ .Name }}
+              <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </a>
+            <div class="dropdown-content">
+              {{ range .Children }}
+                <a href="{{ .URL }}" class="{{ if $currentPage.IsMenuCurrent "main" . }}active{{ end }}">
+                  {{ .Name }}
+                </a>
+              {{ end }}
+            </div>
+          </div>
+        {{ else }}
+          <a href="{{ .URL }}" class="{{ if or (eq $currentPage.RelPermalink .URL) (eq $currentPage.Permalink .URL) }}active{{ end }}">
+            {{ .Name }}
+          </a>
+        {{ end }}
+      {{ end }}
+    </nav>
+
+    <!-- Header Actions -->
+    <div class="header-actions">
+      <!-- Search Toggle -->
+      {{ if .Site.Params.enableSearch }}
+      <div class="search-container">
+        <button class="search-toggle" aria-label="Search" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+        <div class="search-form">
+          <form action="{{ "search" | absURL }}" method="GET">
+            <input type="search" name="s" class="search-input" placeholder="Search articles..." aria-label="Search articles">
+          </form>
+        </div>
+      </div>
+      {{ end }}
+
+      <!-- Theme Toggle -->
+      {{ if not site.Params.disableThemeToggle }}
+        {{ partial "dark-mode-toggle.html" . }}
+      {{ end }}
+
+      <!-- Mobile Menu Toggle -->
+      <button class="menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-navigation">
+        <span class="menu-toggle-line"></span>
+        <span class="menu-toggle-line"></span>
+        <span class="menu-toggle-line"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Theme Toggle Script -->
+<script>
+  const themeToggle = document.getElementById('theme-toggle');
+  const html = document.documentElement;
+  
+  // Check for saved user preference, if any, on load
+  const savedTheme = localStorage.getItem('theme') || 
+    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  
+  // Apply the saved theme
+  if (savedTheme === 'dark') {
+    html.classList.add('dark');
+  } else {
+    html.classList.remove('dark');
+  }
+  
+  // Toggle theme on button click
+  themeToggle?.addEventListener('click', () => {
+    html.classList.toggle('dark');
+    const isDark = html.classList.contains('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+  
+  // Mobile menu toggle
+  const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  
+  mobileMenuToggle?.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+    mobileMenuToggle.classList.toggle('active');
+  });
+  
+  // Close mobile menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.nav') && navLinks?.classList.contains('active')) {
+      navLinks.classList.remove('active');
+      mobileMenuToggle?.classList.remove('active');
+    }
+  });
+</script>

@@ -1,0 +1,171 @@
+# Image processing configuration for Hugo
+# Documentation: https://gohugo.io/content-management/image-processing/
+
+[imaging]
+  # Default quality for resized images (1-100)
+  quality = 85
+  
+  # Resample filter to use when resizing
+  # Options: box, blackman, catmullrom, mitchellnetravali, cosine, gaussian, lanczos, bspline, nearestNeighbor, hermite, hamming
+  resampleFilter = "lanczos"
+  
+  # Anchor point for cropping
+  # Options: center, smart, top-left, top, top-right, left, right, bottom-left, bottom, bottom-right
+  anchor = "smart"
+  
+  # Enable EXIF data preservation
+  [imaging.exif]
+    disableDate = false
+    disableLatLong = true
+    disableCopyright = true
+
+# Enable WebP output format
+[mediaTypes]
+  [mediaTypes."image/webp"]
+    suffixes = ["webp"]
+
+# Configure WebP output format
+[outputFormats]
+  [outputFormats.WebP]
+    mediaType = "image/webp"
+    isPlainText = false
+    isHTMLDocument = false
+    permalinkable = false
+    weight = 100
+
+# Configure responsive images
+[imaging.responsive]
+  # Enable responsive images
+  enabled = true
+  
+  # Default image processing
+  [imaging.responsive.default]
+    # Default image processing options
+    quality = 80
+    
+    # Enable WebP by default
+    formats = ["webp", "jpeg"]
+    
+    # Sizes attribute for responsive images
+    sizes = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33.3vw"
+    
+    # Default image format (fallback for browsers that don't support WebP)
+    defaultFormat = "jpeg"
+
+# Configure image processing presets
+[imaging.process]
+  # Default image processing settings
+  default = ""
+  
+  # Responsive image sizes (width in pixels)
+  sizes = [400, 600, 800, 1000, 1200, 1600, 2000]
+  
+  # Responsive image sizes for high DPI displays
+  [imaging.process.responsive]
+    # For 1x, 2x, and 3x DPI
+    multipliers = [1, 2, 3]
+    
+    # Maximum width for each multiplier
+    maxWidth = 2048
+
+# Configure image processing for different sections
+[imaging.sections]
+  # Blog post images
+  [imaging.sections.posts]
+    # Default processing for post images
+    default = ""
+    
+    # Featured image processing
+    [imaging.sections.posts.featured]
+      resize = "1200x630"
+      quality = 90
+      
+    # Thumbnail processing
+    [imaging.sections.posts.thumb]
+      resize = "400x250"
+      quality = 85
+      
+  # Author images
+  [imaging.sections.authors]
+    [imaging.sections.authors.avatar]
+      resize = "200x200"
+      quality = 90
+
+# Configure image processing for different output formats
+[imaging.formats]
+  # WebP format settings
+  [imaging.formats.webp]
+    quality = 85
+    method = 4  # 0-6, higher is better but slower
+    lossless = false
+    smart_subsample = true
+    effort = 4  # 1-6, higher is better but slower
+
+  # JPEG format settings
+  [imaging.formats.jpeg]
+    quality = 90
+    progressive = true
+    optimize_coding = true
+    subsample_mode = "4:4:4"
+    trellis_quant = true
+    overshoot_deringing = true
+    optimise_scans = true
+    quant_table = 3
+
+  # PNG format settings
+  [imaging.formats.png]
+    compression_level = 6  # 0-9, higher is better but slower
+    interlaced = false
+    palette = false
+
+# Configure image processing for different content types
+[imaging.content]
+  # Blog posts
+  [imaging.content.post]
+    featured = { resize = "1200x630", quality = 90 }
+    thumbnail = { resize = "400x250", quality = 85 }
+    
+  # Pages
+  [imaging.content.page]
+    featured = { resize = "1200x630", quality = 90 }
+    
+  # Authors
+  [imaging.content.author]
+    avatar = { resize = "200x200", quality = 90 }
+
+# Configure image processing for different output formats
+[imaging.output]
+  # WebP output settings
+  [imaging.output.webp]
+    quality = 85
+    method = 4
+    
+  # JPEG output settings
+  [imaging.output.jpeg]
+    quality = 90
+    progressive = true
+    
+  # PNG output settings
+  [imaging.output.png]
+    compressionLevel = 6
+    
+  # GIF output settings
+  [imaging.output.gif]
+    optimization = true
+
+# Configure image processing for different devices
+[imaging.devices]
+  # Mobile devices
+  [imaging.devices.mobile]
+    maxWidth = 640
+    quality = 80
+    
+  # Tablets
+  [imaging.devices.tablet]
+    maxWidth = 1024
+    quality = 85
+    
+  # Desktop
+  [imaging.devices.desktop]
+    maxWidth = 2048
+    quality = 90

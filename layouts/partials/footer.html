@@ -1,0 +1,159 @@
+<!-- Professional Footer -->
+<footer class="footer">
+  <div class="footer-container">
+    <!-- Brand & Description -->
+    <div class="footer-brand">
+      <a href="{{ .Site.BaseURL }}" class="footer-logo">
+        {{ if .Site.Params.logo }}
+          {{ $logo := resources.Get .Site.Params.logo }}
+          {{ if $logo }}
+            <img src="{{ $logo.RelPermalink }}" alt="{{ .Site.Title }}" class="logo-img" width="40" height="40" loading="lazy">
+          {{ end }}
+        {{ end }}
+        <span>{{ .Site.Title }}</span>
+      </a>
+      <p class="footer-description">
+        {{ .Site.Params.description | default "Expert insights and resources on email technology, deliverability, and best practices." }}
+      </p>
+      <div class="footer-social">
+        {{ with .Site.Params.social }}
+          {{ range . }}
+            <a href="{{ .url }}" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="{{ .name }}">
+              <i class="fab fa-{{ .icon }}"></i>
+            </a>
+          {{ end }}
+        {{ else }}
+          <!-- Default social links if none specified -->
+          <a href="https://twitter.com/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="https://github.com/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://linkedin.com/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+        {{ end }}
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-links">
+      <h3>Quick Links</h3>
+      <ul>
+        {{ range .Site.Menus.main }}
+          <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+        {{ end }}
+        {{ with .Site.GetPage "/about" }}
+          <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+        {{ end }}
+        {{ with .Site.GetPage "/contact" }}
+          <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+        {{ end }}
+        {{ with .Site.GetPage "/privacy" }}
+          <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+        {{ end }}
+      </ul>
+    </div>
+
+    <!-- Categories -->
+    <div class="footer-links">
+      <h3>Categories</h3>
+      <ul>
+        {{ range first 5 (where .Site.Pages "Section" "blog").GroupBy "Section" }}
+          {{ $section := .Key }}
+          {{ range first 5 .Pages }}
+            <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+          {{ end }}
+        {{ end }}
+        {{ with .Site.GetPage "/categories" }}
+          <li><a href="{{ .RelPermalink }}" class="view-all">View All Categories →</a></li>
+        {{ end }}
+      </ul>
+    </div>
+
+    <!-- Newsletter -->
+    <div class="footer-newsletter">
+      <h3>Stay Updated</h3>
+      <p>Subscribe to our newsletter for the latest articles and updates.</p>
+      <form class="newsletter-form" action="{{ .Site.Params.newsletterAction | default "#" }}" method="post" target="_blank" novalidate>
+        <input 
+          type="email" 
+          name="EMAIL" 
+          class="newsletter-input" 
+          placeholder="Your email address" 
+          aria-label="Your email address"
+          required
+        >
+        <button type="submit" class="newsletter-button">
+          Subscribe
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 0.5rem;">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </form>
+      <p class="privacy-notice">
+        We respect your privacy. Unsubscribe at any time.
+      </p>
+    </div>
+  </div>
+
+  <!-- Copyright -->
+  <div class="footer-bottom">
+    <p>&copy; {{ now.Year }} {{ .Site.Title }}. All rights reserved. 
+      {{ with .Site.GetPage "/privacy" }}
+        <a href="{{ .RelPermalink }}">Privacy Policy</a>
+      {{ end }}
+      {{ with .Site.GetPage "/terms" }}
+        <span class="separator">•</span>
+        <a href="{{ .RelPermalink }}">Terms of Service</a>
+      {{ end }}
+      {{ with .Site.GetPage "/cookies" }}
+        <span class="separator">•</span>
+        <a href="{{ .RelPermalink }}">Cookie Policy</a>
+      {{ end }}
+    </p>
+  </div>
+  
+  <div class="footer-bottom">
+    <div class="container">
+      <p>&copy; {{ now.Format "2006" }} {{ .Site.Title }}. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="/privacy-policy/">Privacy Policy</a>
+        <span class="divider">•</span>
+        <a href="/terms-of-service/">Terms of Service</a>
+        <span class="divider">•</span>
+        <a href="/sitemap.xml">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to Top Button -->
+<button id="back-to-top" class="back-to-top" aria-label="Back to top">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 15l-6-6-6 6"/>
+  </svg>
+</button>
+
+<!-- Back to Top Script -->
+<script>
+  const backToTop = document.getElementById('back-to-top');
+  
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+      backToTop.classList.add('show');
+    } else {
+      backToTop.classList.remove('show');
+    }
+  });
+  
+  backToTop.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+</script>
