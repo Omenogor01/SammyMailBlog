@@ -23,8 +23,29 @@ enableEmoji = true
 enableGitInfo = true
 pygmentsCodeFences = true
 pygmentsUseClasses = true
-disableKinds = ['taxonomy', 'term']
+pygmentsUseClassic = false
+pygmentsStyle = "monokai"
+
+# Performance optimizations
+minify = { use = "html5" }
+minifyOutput = true
+enableInlineShortcodes = true
+enableMissingTranslationPlaceholders = false
+
+# Disable unused features
+disableKinds = ['taxonomy', 'term', 'RSS', 'sitemap', 'robotsTXT', '404']
 canonifyURLs = true
+
+# Theme configuration
+[module]
+  [module.hugoVersion]
+    extended = true
+    min = "0.111.0"
+    max = "0.125.0"
+  
+  [[module.imports]]
+    path = "github.com/adityatelange/hugo-PaperMod"
+    version = "v0.0.0-20240330000000-1234567890ab"  # Replace with latest commit hash
 
 # Image processing
 [imaging]
