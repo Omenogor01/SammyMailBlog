@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - {{ .Site.Title }}</title>
+    <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+    <style>
+        .error-container {
+            max-width: 800px;
+            margin: 5rem auto;
+            padding: 2rem;
+            text-align: center;
+        }
+        .error-code {
+            font-size: 6rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+        .error-message {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--text);
+        }
+        .error-description {
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            color: var(--secondary);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .home-link {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary);
+            color: white !important;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+        }
+        .home-link:hover {
+            background-color: var(--link-hover);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    {{ partial "header.html" . }}
+    
+    <main class="error-container">
+        <div class="error-code">404</div>
+        <h1 class="error-message">Page Not Found</h1>
+        <p class="error-description">
+            Oops! The page you're looking for doesn't exist or has been moved. 
+            Let's get you back to the homepage.
+        </p>
+        <a href="{{ "/" | relURL }}" class="home-link">Return to Homepage</a>
+    </main>
+
+    {{ partial "footer.html" . }}
+</body>
+</html>

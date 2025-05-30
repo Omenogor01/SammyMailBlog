@@ -1,0 +1,136 @@
+/* Custom styles for SammyMail Blog */
+
+/* Base typography improvements */
+:root {
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+    --font-mono: 'Fira Code', 'Roboto Mono', 'Courier New', monospace;
+}
+
+body {
+    font-family: var(--font-sans);
+    line-height: 1.7;
+}
+
+/* Code blocks */
+pre, code {
+    font-family: var(--font-mono);
+    border-radius: 6px;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.3;
+    margin-top: 2em;
+    margin-bottom: 0.8em;
+    color: var(--primary);
+}
+
+/* Links */
+a {
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Navigation */
+.nav {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--border);
+}
+
+/* Posts list */
+.post-entry {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    border-radius: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid var(--border);
+}
+
+.post-entry:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Tags */
+.post-tags {
+    margin: 1.5rem 0;
+}
+
+.tag {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    background: var(--code-bg);
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.tag:hover {
+    background: var(--code-bg);
+    text-decoration: none;
+}
+
+/* Footer */
+.footer {
+    margin-top: 4rem;
+    padding: 2rem 0;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--secondary);
+    font-size: 0.9rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .post-entry {
+        padding: 1rem;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Custom blockquotes */
+blockquote {
+    border-left: 4px solid var(--primary);
+    margin: 1.5rem 0;
+    padding: 0.5rem 0 0.5rem 1.5rem;
+    color: var(--secondary);
+    font-style: italic;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.95em;
+}
+
+th, td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    background-color: var(--code-bg);
+    font-weight: 600;
+}
+
+tr:hover {
+    background-color: var(--code-bg);
+}

@@ -1,0 +1,122 @@
+baseURL = 'https://sammymail.blog/'
+languageCode = 'en-us'
+title = 'SammyMail | Email Technology Insights'
+theme = 'PaperMod'
+
+# Site settings
+[pagination]
+  pagerSize = 10
+
+# Enable features
+enableRobotsTXT = true
+enableEmoji = true
+pygmentsCodeFences = true
+pygmentsUseClasses = true
+
+# Build settings
+buildDrafts = false
+buildFuture = false
+buildExpired = false
+
+# Markup settings
+[markup]
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    lineNos = true
+    lineNumbersInTable = true
+    noClasses = false
+    style = 'monokai'
+  
+  [markup.goldmark.renderer]
+    unsafe = true
+    
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+
+[params]
+  # Theme settings
+  theme = 'auto'  # auto, light, dark
+  defaultTheme = 'light'  # Default theme for auto mode
+  homeInfoParams = { Title = "Email Technology Expert", Content = "Insights, tutorials, and best practices for email technology professionals" }
+  
+  # Display settings
+  ShowReadingTime = true
+  ShowWordCount = true
+  ShowCodeCopyButtons = true
+  ShowPostNavLinks = true
+  ShowRssButtonInSectionTermList = true
+  ShowAllPagesInArchive = true
+  ShowPageNums = true
+  ShowBreadCrumbs = true
+  
+  # SEO settings
+  description = 'Expert insights on email technologies, deliverability, and best practices for developers and marketers'
+  keywords = ['email technology', 'email deliverability', 'email marketing', 'SPF', 'DKIM', 'DMARC', 'email development']
+  
+  # Author information
+  author = 'Samuel Omenogor'
+  author_image = '/images/author.jpg'
+  author_description = 'Email Technology Expert | Deliverability Specialist | Speaker'
+  
+  # Social links
+  socialIcons = [
+    { name = 'github', url = 'https://github.com/Omenogor01' },
+    { name = 'linkedin', url = 'https://www.linkedin.com/in/samuel-omenogor-a8514125a/' },
+    { name = 'envelope', url = 'mailto:samuel@Omen-og-or.com' }
+  ]
+  
+  # Custom CSS
+  customCSS = ['css/custom.css']
+  
+  # Analytics (uncomment and add your own)
+  # googleAnalytics = 'UA-XXXXXXXXX-X'
+  # plausibleAnalytics = 'your-domain.com'
+  
+  # Comments (uncomment and configure as needed)
+  # [params.comments]
+  #   enabled = true
+  #   provider = 'disqus'
+  #   disqusShortname = 'your-disqus-shortname'
+  
+  # Newsletter (uncomment and configure as needed)
+  # [params.newsletter]
+  #   enable = true
+  #   title = 'Subscribe to our newsletter'
+  #   description = 'Get the latest posts delivered right to your inbox.'
+  #   endpoint = 'your-newsletter-endpoint'
+  
+  # Custom scripts
+  customJS = ['js/custom.js']
+  
+  # Theme colors
+  [params.colors]
+    theme = '#2563EB'  # Primary blue
+    link = '#1D4ED8'  # Darker blue for links
+    linkHover = '#1E40AF'  # Even darker blue for hover
+    background = '#FFFFFF'  # White background
+    text = '#1F2937'  # Dark gray text
+    textLight = '#6B7280'  # Lighter gray for secondary text
+    border = '#E5E7EB'  # Light gray for borders
+
+[menu]
+  [[menu.main]]
+    name = 'Home'
+    url = '/'
+    weight = 1
+  
+  [[menu.main]]
+    name = 'Posts'
+    url = '/posts/'
+    weight = 2
+  
+  [[menu.main]]
+    name = 'Tags'
+    url = '/tags/'
+    weight = 3
+  
+  [[menu.main]]
+    name = 'About'
+    url = '/about/'
+    weight = 4
