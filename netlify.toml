@@ -1,30 +1,28 @@
 [build]
-  publish = "public"
-  command = "hugo version && hugo --gc --minify --cleanDestinationDir --enableGitInfo --environment production"
+publish = "public"
+command = "hugo version && hugo --gc --minify --cleanDestinationDir --enableGitInfo --environment production"
 
 [build.environment]
-  HUGO_VERSION = "0.125.7"  # Latest stable version compatible with PaperMod
-  NODE_VERSION = "20.0.0"
-  GO_VERSION = "1.21"
-  HUGO_ENV = "production"
-  HUGO_ENABLEGITINFO = "true"
+HUGO_VERSION = "0.125.7"
+NODE_VERSION = "20.0.0"
+GO_VERSION = "1.21"
+HUGO_ENV = "production"
+HUGO_ENABLEGITINFO = "true"
 
 [context.production]
-  command = "hugo --gc --minify --cleanDestinationDir --environment production"
+command = "hugo --gc --minify --cleanDestinationDir --environment production"
 
 [context.deploy-preview]
-  command = "hugo --gc --minify --baseURL $DEPLOY_PRIME_URL --buildDrafts --buildFuture --environment production"
+command = "hugo --gc --minify --baseURL $DEPLOY_PRIME_URL --buildDrafts --buildFuture --environment production"
 
 [[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "DENY"
-    X-XSS-Protection = "1; mode=block"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self' https://www.google-analytics.com;"
-    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
-    X-Content-Type-Options = "nosniff"
-    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
+for = "/*"
 
-[context.deploy-preview]
-  command = "hugo --gc --minify --baseURL $DEPLOY_PRIME_URL --buildDrafts --buildFuture"
+[headers.values]
+X-Frame-Options = "DENY"
+X-XSS-Protection = "1; mode=block"
+Referrer-Policy = "strict-origin-when-cross-origin"
+Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self' https://www.google-analytics.com;"
+Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+X-Content-Type-Options = "nosniff"
+Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
