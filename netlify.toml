@@ -1,9 +1,9 @@
 [build]
   publish = "public"
-  command = "hugo --gc --minify --cleanDestinationDir"
-  
+  command = "hugo version && hugo --gc --minify --cleanDestinationDir --enableGitInfo --environment production"
+
 [build.environment]
-  HUGO_VERSION = "0.111.3"  # Stable version compatible with PaperMod
+  HUGO_VERSION = "0.125.7"  # Latest stable version compatible with PaperMod
   NODE_VERSION = "20.0.0"
   GO_VERSION = "1.21"
   HUGO_ENV = "production"
@@ -11,6 +11,9 @@
 
 [context.production]
   command = "hugo --gc --minify --cleanDestinationDir --environment production"
+
+[context.deploy-preview]
+  command = "hugo --gc --minify --baseURL $DEPLOY_PRIME_URL --buildDrafts --buildFuture --environment production"
 
 [[headers]]
   for = "/*"
