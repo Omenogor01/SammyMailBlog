@@ -1,10 +1,9 @@
 baseURL = 'https://Omen-og-or.com/'
 languageCode = 'en-us'
-title = 'SammyMail | Email Technology Insights'
 theme = 'PaperMod'
 
 # Site identity
-title = 'SammyMail'
+title = 'SammyMail | Email Technology Insights'
 description = 'Expert insights on email technology, deliverability, and authentication'
 
 # Author information
