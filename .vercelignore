@@ -1,0 +1,11 @@
+.git
+.gitignore
+.idea
+.hugo_build.lock
+node_modules/
+public/
+resources/
+.DS_Store
+*.log
+*.tmp
+.vercel

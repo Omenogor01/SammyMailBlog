@@ -1,0 +1,15 @@
+{
+  "name": "sammymail-blog",
+  "version": "1.0.0",
+  "description": "SammyMail Blog - Email Technology Insights",
+  "scripts": {
+    "build": "hugo --gc --minify",
+    "start": "hugo server -D"
+  },
+  "dependencies": {
+    "hugo-extended": "^0.124.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
