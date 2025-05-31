@@ -1,33 +1,257 @@
-baseURL = 'https://sammymail.netlify.app/'
+# Base URL will be set automatically by Vercel
+baseURL = '/'
 languageCode = 'en-us'
 theme = 'PaperMod'
-
-# Performance optimizations
+enableGitInfo = true
 enableRobotsTXT = true
 enableEmoji = true
-enableGitInfo = true
-pygmentsCodeFences = true
-pygmentsUseClasses = true
-minify = { use = "html5" }
-minifyOutput = true
 
-# Disable unused features
-disableKinds = ['taxonomy', 'term', 'RSS', 'sitemap', 'robotsTXT', '404']
+# Build configuration
+buildDrafts = false
+buildFuture = false
+buildExpired = false
 canonifyURLs = true
+relativeURLs = false
+uglyURLs = false
+titleCaseStyle = 'AP'  # AP Style title case
+
+# Configure build cache
+[caches]
+  [caches.images]
+    dir = ':resourceDir/_gen/images'
+    maxAge = -1
+  [caches.assets]
+    dir = ':resourceDir/_gen/assets'
+    maxAge = -1
+  [caches.modules]
+    dir = ':cacheDir/modules'
+    maxAge = -1
+
+# Performance optimizations
+minify = { use = 'html5' }
+minifyOutput = true
+enableInlineShortcodes = true
+enableMissingTranslationPlaceholders = false
+
+# Enable essential features
+# Keep taxonomy and term disabled if not using categories/tags
+disableKinds = ['taxonomy', 'term', '404']
+
+# Enable sitemap generation
+[sitemap]
+  changefreq = 'weekly'
+  filename = 'sitemap.xml'
+  priority = 0.5
+
+# Configure RSS feed
+[outputFormats.RSS]
+  mediaType = 'application/rss'
+  baseName = 'index'
+  isPlainText = false
+  isHTMLDocument = false
+  permalinkable = false
+  weight = 20
+
+# Configure Atom feed
+[outputFormats.Atom]
+  mediaType = 'application/atom+xml'
+  baseName = 'index'
+  isPlainText = false
+  isHTMLDocument = false
+  permalinkable = false
+  weight = 30
+
+# Security headers and CSP
+[security]
+  [security.http]
+    [security.http.headers]
+      # HTTP Strict Transport Security (HSTS)
+      [security.http.headers.STS]
+        enable = true
+        maxAge = 31536000  # 1 year
+        includeSubdomains = true
+        preload = true
+      
+      # X-XSS-Protection
+      [security.http.headers.XSS]
+        enable = true
+        mode = 'block'
+      
+      # X-Content-Type-Options
+      [security.http.headers.XCTO]
+        enable = true
+        nosniff = true
+      
+      # X-Frame-Options
+      [security.http.headers.XFO]
+        enable = true
+        sameOrigin = true
+      
+      # Content Security Policy (CSP)
+      [security.http.headers.Content-Security-Policy]
+        enable = true
+        defaultSrc = ["'self'"]
+        scriptSrc = [
+          "'self'",
+          "'unsafe-inline'",  # Required for some themes
+          "'unsafe-eval'"     # Required for some JS libraries
+        ]
+        styleSrc = [
+          "'self'",
+          "'unsafe-inline'"   # Required for some themes
+        ]
+        imgSrc = [
+          "'self'",
+          "data:",
+          "https: data:",
+          "https://*.google-analytics.com",
+          "https://www.googletagmanager.com"
+        ]
+        connectSrc = [
+          "'self'",
+          "https://www.google-analytics.com",
+          "https://region1.google-analytics.com"
+        ]
+        fontSrc = ["'self'", "data:", "https:"]
+        frameSrc = ["'self'", "https://www.youtube.com"]
+        objectSrc = ["'none'"]
+        baseUri = ["'self'"]
+        formAction = ["'self'"]
+        frameAncestors = ["'self'"]
+        upgradeInsecureRequests = true
+      
+      # Referrer Policy
+      [security.http.headers.Referrer-Policy]
+        enable = true
+        policy = "strict-origin-when-cross-origin"
+      
+      # Permissions Policy
+      [security.http.headers.Permissions-Policy]
+        enable = true
+        accelerometer = ["'none'"]
+        camera = ["'none'"]
+        geolocation = ["'none'"]
+        gyroscope = ["'none'"]
+        magnetometer = ["'none'"]
+        microphone = ["'none'"]
+        payment = ["'none'"]
+        usb = ["'none'"]
+      
+      # Feature Policy
+      [security.http.headers.Feature-Policy]
+        enable = true
+        syncXhr = ["'self'"]
+        fullscreen = ["'self'"]
+        camera = ["'none'"]
+        microphone = ["'none'"]
+        geolocation = ["'none'"]
+        payment = ["'none'"]
 
 # Image processing
 [imaging]
   quality = 80
-  resampleFilter = "Lanczos"
-  anchor = "smart"
-  hint = "photo"
+  resampleFilter = 'Lanczos'
+  anchor = 'smart'
+  hint = 'photo'
+  [imaging.exif]
+    disableDate = false
+    disableLatLong = true
+
+# Media types and output formats
+[mediaTypes]
+  [mediaTypes.'image/webp']
+    suffixes = ['webp']
+  [mediaTypes.'application/atom']
+    suffixes = ['xml']
+  [mediaTypes.'application/rss']
+    suffixes = ['xml']
+  [mediaTypes.'application/feed+json']
+    suffixes = ['json']
+
+[outputFormats]
+  [outputFormats.WebP]
+    mediaType = 'image/webp'
+    isPlainText = false
+    isHTMLDocument = false
+    permalinkable = false
+    weight = 100
+  [outputFormats.RSS]
+    mediaType = 'application/rss'
+    baseName = 'index'
+    isPlainText = false
+    isHTMLDocument = false
+    permalinkable = false
+    weight = 20
+  [outputFormats.JSONFeed]
+    mediaType = 'application/feed+json'
+    baseName = 'index'
+    isPlainText = false
+    isHTMLDocument = false
+    permalinkable = false
+    weight = 30
+
+# Markup settings
+[markup]
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    lineNos = true
+    lineNumbersInTable = true
+    noClasses = false
+    style = 'monokai'
+    tabWidth = 4
+  
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = false
+    [markup.goldmark.parser]
+      autoHeadingID = true
+      autoHeadingIDType = 'github'
+    
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+    ordered = false
+    
+  [markup.mediaTypes]
+    [markup.mediaTypes.'text/markdown']
+      suffixes = ['md', 'markdown']
+    [markup.mediaTypes.'text/html']
+      suffixes = ['html']
+
+# Pagination
+[pagination]
+  pagerSize = 10
+  default = 10
+
+# Sitemap configuration
+[sitemap]
+  changefreq = 'weekly'
+  filename = 'sitemap.xml'
+  priority = 0.5
+
+# Privacy settings
+[privacy]
+  [privacy.disqus]
+    disable = false
+  [privacy.googleAnalytics]
+    respectDoNotTrack = true
+    useSessionStorage = true
+  [privacy.instagram]
+    simple = true
+  [privacy.twitter]
+    enableDNT = true
+  [privacy.vimeo]
+    simple = true
+  [privacy.youtube]
+    privacyEnhanced = true
 
 # Site identity
 title = 'SammyMail | Email Technology Insights'
 description = 'Expert insights on email technology, deliverability, and authentication'
 
 # Author information
-[author]
+[params.author]
   name = 'Sammy'
   email = 'contact@sammymail.com'
   bio = 'Email technology expert and consultant'
@@ -44,10 +268,10 @@ enableGitInfo = true
 pygmentsCodeFences = true
 pygmentsUseClasses = true
 pygmentsUseClassic = false
-pygmentsStyle = "monokai"
+pygmentsStyle = 'monokai'
 
 # Performance optimizations
-minify = { use = "html5" }
+minify = { use = 'html5' }
 minifyOutput = true
 enableInlineShortcodes = true
 enableMissingTranslationPlaceholders = false
@@ -60,19 +284,13 @@ canonifyURLs = true
 [module]
   [module.hugoVersion]
     extended = true
-    min = "0.111.0"
-    max = "0.125.0"
+    min = '0.146.0'
+    max = '0.147.0'
   
   [[module.imports]]
-    path = "github.com/adityatelange/hugo-PaperMod"
-    version = "v0.0.0-20240330000000-1234567890ab"  # Replace with latest commit hash
+    path = 'github.com/adityatelange/hugo-PaperMod'
+    version = 'master'  # Using the master branch for latest stable version
 
-# Image processing
-[imaging]
-  quality = 80
-  resampleFilter = 'CatmullRom'
-  anchor = 'smart'
-  
 [mediaTypes]
   [mediaTypes.'image/webp']
     suffixes = ['webp']
@@ -108,10 +326,234 @@ buildExpired = false
     endLevel = 4
 
 [params]
-  # Theme settings
+  # Site settings
+  env = 'production'  # or 'development' for local development
   theme = 'auto'  # auto, light, dark
   defaultTheme = 'light'  # Default theme for auto mode
   homeInfoParams = { Title = "Email Technology Expert", Content = "Insights, tutorials, and best practices for email technology professionals" }
+  
+  # Display settings
+  showReadingTime = true
+  showWordCount = true
+  showTableOfContents = true
+  showBreadcrumbs = true
+  showPostNav = true
+  showRelatedPosts = true
+  showShareButtons = true
+  showAuthorBio = true
+  showDate = true
+  showLastMod = true
+  showTaxonomies = true
+  
+  # Content settings
+  summaryLength = 50  # Number of words to show in post summaries
+  mainSections = ['posts']
+  recentPostsLimit = 5
+  relatedPostsLimit = 5
+  
+  # SEO settings
+  description = 'Expert insights on email technologies, deliverability, and best practices for developers and marketers'
+  keywords = ['email technology', 'email deliverability', 'email marketing', 'SPF', 'DKIM', 'DMARC', 'email development']
+  
+  # Image settings
+  defaultFeaturedImage = '/images/featured/default.jpg'
+  fallbackImage = '/images/placeholder.png'
+  
+  # Comment settings
+  [params.comments]
+    enable = false
+    provider = 'disqus'  # or 'utterances', 'giscus', 'staticman', 'remark42', 'commento', 'hyvor', 'intense'
+    disqusShortname = ''
+    utterances = { repo = '', issueTerm = 'pathname', label = 'comment', theme = 'github-light' }
+    giscus = { repo = '', repoID = '', category = 'Comments', categoryID = '', mapping = 'pathname', reactionsEnabled = '1', emitMetadata = '0', theme = 'light' }
+    
+  # Search settings
+  [params.search]
+    enable = true
+    type = 'fusejs'  # or 'algolia', 'lunr'
+    contentLocation = 'content/'
+    fuseJsOptions = '{ "keys": ["title", "summary", "content"] }'
+    
+  # Analytics settings
+  [params.analytics]
+    enable = true
+    googleAnalytics = 'G-D1FJRJDPGC'  # Your Google Analytics 4 Measurement ID
+    plausibleAnalytics = ''  # Your Plausible domain
+    cloudflareAnalytics = ''  # Your Cloudflare Analytics token
+    
+  # Social sharing
+  [params.share]
+    enable = true
+    twitter = true
+    facebook = true
+    linkedin = true
+    reddit = true
+    pinterest = false
+    telegram = true
+    whatsapp = true
+    email = true
+    
+  # Newsletter configuration
+  [params.newsletter]
+    enable = true
+    provider = 'mailchimp'  # or 'convertkit', 'revue', 'buttondown', 'mailerlite', 'substack', 'custom'
+    mailchimpAction = 'https://your-mailchimp-form-action'
+    mailchimpName = 'YOUR_MAILCHIMP_FORM_NAME'
+    
+  # Cookie consent banner
+  [params.cookieconsent]
+    enable = true
+    theme = 'edgeless'  # 'edgeless', 'classic', 'minimal'
+    position = 'bottom'  # 'bottom', 'top', 'top-static'
+    policyURL = '/privacy/#cookies'
+    
+  # Custom scripts and styles
+  customCSS = ['css/custom.css']
+  customJS = ['js/custom.js']
+  
+  # Extensions
+  [params.extensions]
+    mermaid = true  # Enable Mermaid.js for diagrams
+    katex = true    # Enable KaTeX for math typesetting
+    lazySizes = true # Enable lazy loading for images
+    instantPage = true # Enable instant.page for faster navigation
+    
+  # Author information
+  [params.author]
+    name = 'Samuel Omenogor'
+    image = '/images/author.jpg'
+    bio = 'Email Technology Expert | Deliverability Specialist | Speaker'
+    location = 'Nigeria'
+    company = 'SammyMail'
+    companyURL = 'https://sammymail.netlify.app/'
+    
+    # Social links
+    [params.author.social]
+      twitter = 'https://twitter.com/omenogor_sam'
+      github = 'https://github.com/Omenogor01'
+      gitlab = ''
+      linkedin = 'https://www.linkedin.com/in/samuel-omenogor-a8514125a/'
+      instagram = ''
+      facebook = ''
+      youtube = ''
+      twitch = ''
+      medium = ''
+      devto = ''
+      stackoverflow = ''
+      codepen = ''
+      dribbble = ''
+      behance = ''
+      pinterest = ''
+      reddit = ''
+      email = 'mailto:samuel@Omen-og-or.com'
+      
+  # Footer settings
+  [params.footer]
+    enable = true
+    copyright = true
+    credits = true
+    hugo = true
+    theme = true
+    
+    # Custom footer content (HTML allowed)
+    custom = '''
+    <div class="mt-4 text-sm text-gray-500 dark:text-gray-400">
+      <p>© {now.Format "2006"} SammyMail. All rights reserved.</p>
+    </div>
+    '''
+    
+  # Table of contents
+  [params.toc]
+    enable = true
+    number = true
+    auto = true
+    keepStatic = false
+    
+  # Related content
+  [params.related]
+    enable = true
+    threshold = 80
+    includeNewer = true
+    toLower = false
+    
+  # Post navigation
+  [params.postNavigation]
+    enable = true
+    prevText = 'Previous'
+    nextText = 'Next'
+    
+  # Image processing
+  [params.imageProcessing]
+    enabled = true
+    resizeFilter = 'Lanczos'
+    quality = 80
+    anchor = 'smart'
+    
+  # Performance settings
+  [params.performance]
+    minify = true
+    minifyJS = true
+    minifyCSS = true
+    minifyHTML = true
+    inlineCSS = true
+    inlineJS = true
+    preload = true
+    preconnect = true
+    dnsPrefetch = true
+    preloadFonts = true
+    
+  # Security headers
+  [params.security]
+    csp = "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://www.google-analytics.com; frame-src 'self' https://www.youtube.com https://www.slideshare.net;"
+    featurePolicy = "geolocation 'none'; midi 'none'; notifications 'none'; push 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; speaker 'none'; vibrate 'none'; fullscreen 'self'; payment 'none';"
+    referrerPolicy = 'strict-origin-when-cross-origin'
+    permissionsPolicy = "geolocation=(), microphone=(), camera=()"
+    
+  # RSS/Atom feed settings
+  [params.feed]
+    enable = true
+    type = 'rss'  # 'rss', 'atom', or 'json'
+    limit = 20
+    copyright = 'Copyright © {now.Year} SammyMail. All rights reserved.'
+    skipHTML = false
+    
+  # Sitemap settings
+  [params.sitemap]
+    changefreq = 'weekly'
+    priority = 0.5
+    filename = 'sitemap.xml'
+    
+  # Custom output formats
+  [params.outputFormats]
+    enable = true
+    webp = true
+    avif = false  # Requires Hugo Extended
+    
+  # Cache settings
+  [params.cache]
+    enable = true
+    maxAge = 31536000  # 1 year in seconds
+    
+  # Service Worker settings
+  [params.serviceWorker]
+    enable = true
+    offline = true
+    precache = true
+    
+  # Web App Manifest settings
+  [params.manifest]
+    enable = true
+    name = 'SammyMail'
+    short_name = 'SammyMail'
+    description = 'Expert insights on email technology'
+    start_url = '/'
+    display = 'standalone'
+    background_color = '#ffffff'
+    theme_color = '#3b82f6'
+    icons = [
+      { src = '/icons/icon-192x192.png', sizes = '192x192', type = 'image/png' },
+      { src = '/icons/icon-512x512.png', sizes = '512x512', type = 'image/png' }
+    ]
   
   # Social links
   [params.social]
