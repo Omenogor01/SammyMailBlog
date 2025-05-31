@@ -1,6 +1,26 @@
-baseURL = 'https://Omen-og-or.com/'
+baseURL = 'https://sammymail.netlify.app/'
 languageCode = 'en-us'
 theme = 'PaperMod'
+
+# Performance optimizations
+enableRobotsTXT = true
+enableEmoji = true
+enableGitInfo = true
+pygmentsCodeFences = true
+pygmentsUseClasses = true
+minify = { use = "html5" }
+minifyOutput = true
+
+# Disable unused features
+disableKinds = ['taxonomy', 'term', 'RSS', 'sitemap', 'robotsTXT', '404']
+canonifyURLs = true
+
+# Image processing
+[imaging]
+  quality = 80
+  resampleFilter = "Lanczos"
+  anchor = "smart"
+  hint = "photo"
 
 # Site identity
 title = 'SammyMail | Email Technology Insights'
