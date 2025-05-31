@@ -246,8 +246,6 @@ description = 'Expert insights on email technology, deliverability, and authenti
   avatar = '/images/avatar.jpg'  # Add your avatar image to static/images/avatar.jpg
 
 # Site settings
-[pagination]
-  pagerSize = 10
 
 # Enable features
 enableRobotsTXT = true
