@@ -175,13 +175,6 @@ disableKinds = ['taxonomy', 'term', '404']
     isHTMLDocument = false
     permalinkable = false
     weight = 100
-  [outputFormats.RSS]
-    mediaType = 'application/rss'
-    baseName = 'index'
-    isPlainText = false
-    isHTMLDocument = false
-    permalinkable = false
-    weight = 20
   [outputFormats.JSONFeed]
     mediaType = 'application/feed+json'
     baseName = 'index'
