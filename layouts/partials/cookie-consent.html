@@ -1,0 +1,86 @@
+{{- $config := site.Params.cookieconsent -}}
+{{- if $config.enable -}}
+<div id="cookie-consent" class="fixed bottom-0 left-0 right-0 z-50 hidden p-4 bg-white border-t border-gray-200 shadow-lg dark:bg-gray-800 dark:border-gray-700">
+  <div class="container flex flex-col items-center justify-between mx-auto md:flex-row">
+    <div class="mb-4 text-sm text-gray-700 md:mb-0 md:mr-8 dark:text-gray-300">
+      {{- with $config.message -}}
+        {{ . | markdownify }}
+      {{- else -}}
+        We use cookies to enhance your experience. By continuing to visit this site, you agree to our use of cookies.
+        {{- with $config.policyURL }}
+          <a href="{{ . | relURL }}" class="text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300">
+            Learn more
+          </a>
+        {{- end }}
+      {{- end }}
+    </div>
+    <div class="flex flex-shrink-0 space-x-4">
+      <button id="cookie-consent-accept" class="px-4 py-2 text-sm font-medium text-white bg-primary-600 rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+        {{- $config.acceptText | default "Accept" -}}
+      </button>
+      {{- if $config.decline -}}
+        <button id="cookie-consent-decline" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-600">
+          {{- $config.declineText | default "Decline" -}}
+        </button>
+      {{- end -}}
+    </div>
+  </div>
+</div>
+
+<style>
+  #cookie-consent {
+    transition: transform 0.3s ease-in-out;
+    transform: translateY(100%);
+  }
+  #cookie-consent.show {
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const cookieConsent = document.getElementById('cookie-consent');
+    const acceptButton = document.getElementById('cookie-consent-accept');
+    const declineButton = document.getElementById('cookie-consent-decline');
+    const cookieName = 'cookie-consent';
+    const hasConsent = localStorage.getItem(cookieName);
+
+    // Show banner if no consent given
+    if (!hasConsent) {
+      setTimeout(() => {
+        cookieConsent.classList.remove('hidden');
+        // Force reflow
+        cookieConsent.offsetHeight;
+        cookieConsent.classList.add('show');
+      }, 1000);
+    }
+
+    // Handle accept
+    acceptButton.addEventListener('click', function() {
+      localStorage.setItem(cookieName, 'accepted');
+      cookieConsent.classList.remove('show');
+      setTimeout(() => {
+        cookieConsent.remove();
+      }, 300);
+      // Load analytics if enabled
+      {{ with site.Params.analytics }}
+        if ({{ .enable | default false }}) {
+          // Initialize analytics here if not already loaded
+          console.log('Analytics enabled');
+        }
+      {{ end }}
+    });
+
+    // Handle decline
+    if (declineButton) {
+      declineButton.addEventListener('click', function() {
+        localStorage.setItem(cookieName, 'declined');
+        cookieConsent.classList.remove('show');
+        setTimeout(() => {
+          cookieConsent.remove();
+        }, 300);
+      });
+    }
+  });
+</script>
+{{- end -}}

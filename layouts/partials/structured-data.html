@@ -1,0 +1,133 @@
+{{- /* Structured data for better search engine understanding */ -}}
+{{- $logo := site.Params.logo | default "logo.png" | absURL -}}
+{{- $publisher := dict "@type" "Organization" "name" (site.Params.author.name | default site.Title) -}}
+{{- $publisher = merge $publisher (dict "logo" (dict "@type" "ImageObject" "url" $logo)) -}}
+
+{{- if .IsPage -}}
+  {{- /* Article structured data */ -}}
+  {{- $author := dict "@type" "Person" "name" (default .Site.Params.author.name .Params.author) -}}
+  {{- with .Site.Params.author.social -}}
+    {{- $author = merge $author (dict "sameAs" (apply (sort (slice 
+      (default "" .twitter) 
+      (default "" .github)
+      (default "" .linkedin)
+    )) "replace" ".*@(.*)" "$1" "$") ) -}}
+  {{- end -}}
+  
+  {{- $image := .Params.featured_image | default .Site.Params.defaultFeaturedImage | absURL -}}
+  {{- $wordCount := .WordCount -}}
+  {{- $readingTime := math.Round (div (add $wordCount 100) 200.0) -}}
+  {{- if lt $readingTime 1 -}}{{- $readingTime = 1 -}}{{- end -}}
+  
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": {{ .Title | jsonify }},
+      {{- with .Description }}
+      "description": {{ . | jsonify }},
+      {{- else }}
+      "description": {{ .Summary | plainify | jsonify }},
+      {{- end }}
+      {{- with $image }}
+      "image": [{{ . | jsonify }}],
+      {{- end }}
+      "datePublished": {{ .PublishDate.Format "2006-01-02T15:04:05Z07:00" | jsonify }},
+      {{- with .Lastmod }}
+      "dateModified": {{ .Format "2006-01-02T15:04:05Z07:00" | jsonify }},
+      {{- end }}
+      "author": {{ $author | jsonify }},
+      "publisher": {{ $publisher | jsonify }},
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": {{ .Permalink | jsonify }}
+      },
+      {{- with .Params.categories }}
+      "articleSection": {{ delimit . ", " | jsonify }},
+      {{- end }}
+      {{- with .Params.tags }}
+      "keywords": {{ delimit . ", " | jsonify }},
+      {{- end }}
+      {{- with .Site.Params.languageCode }}
+      "inLanguage": {{ . | jsonify }},
+      {{- end }}
+      "wordCount": {{ $wordCount }},
+      "timeRequired": "PT{{ $readingTime }}M"
+    }
+  </script>
+{{- else if .IsHome -}}
+  {{- /* Website structured data */ -}}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": {{ site.Title | jsonify }},
+      "url": {{ site.BaseURL | jsonify }},
+      "description": {{ site.Params.description | default "" | jsonify }},
+      "publisher": {{ $publisher | jsonify }}
+    }
+  </script>
+  
+  {{- /* Breadcrumb structured data */ -}}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@id": {{ site.BaseURL | jsonify }},
+            "name": "Home"
+          }
+        }
+      ]
+    }
+  </script>
+{{- else if eq .Kind "section" -}}
+  {{- /* Collection page structured data */ -}}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": {{ .Title | jsonify }},
+      "description": {{ .Description | default (printf "Articles about %s" .Title) | jsonify }},
+      "url": {{ .Permalink | jsonify }},
+      "publisher": {{ $publisher | jsonify }}
+    }
+  </script>
+{{- end -}}
+
+{{- /* Organization structured data */ -}}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": {{ site.Title | jsonify }},
+    "url": {{ site.BaseURL | jsonify }},
+    {{- with site.Params.logo }}
+    "logo": {{ . | absURL | jsonify }},
+    {{- end }}
+    {{- with site.Params.social }}
+    "sameAs": [
+      {{- $socials := . }}
+      {{- $lastIndex := sub (len $socials) 1 }}
+      {{- $currentIndex := 0 }}
+      {{- range $key, $value := $socials }}
+        {{- if and $value (not (in (slice "email" "rss") $key)) }}
+          {{- $value | jsonify }}{{ if ne $currentIndex $lastIndex }},{{ end }}
+          {{- $currentIndex = add $currentIndex 1 }}
+        {{- end }}
+      {{- end }}
+    ],
+    {{- end }}
+    "contactPoint": [
+      {
+        "@type": "ContactPoint",
+        "email": {{ site.Params.author.email | default "" | jsonify }},
+        "contactType": "customer service"
+      }
+    ]
+  }
+</script>

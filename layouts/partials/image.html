@@ -1,0 +1,43 @@
+{{- /* image.html -- Responsive image partial */ -}}
+{{- $img := resources.Get .src -}}
+{{- $isLocal := and $img (not (hasPrefix .src "http")) -}}
+
+{{- /* Process local images with Hugo */ -}}
+{{- if $isLocal -}}
+  {{- $width := .width | default $img.Width -}}
+  {{- $height := .height | default $img.Height -}}
+  {{- $sizes := .sizes | default "(max-width: 768px) 100vw, 50vw" -}}
+  
+  <picture>
+    {{- /* AVIF format */ -}}
+    {{- if .avif | default true -}}
+      {{- $avif := $img.Resize (printf "%dx avif" $width) -}}
+      <source type="image/avif" srcset="{{ $avif.RelPermalink }}" sizes="{{ $sizes }}">
+    {{- end -}}
+
+    {{- /* WebP format */ -}}
+    {{- if .webp | default true -}}
+      {{- $webp := $img.Resize (printf "%dx webp" $width) -}}
+      <source type="image/webp" srcset="{{ $webp.RelPermalink }}" sizes="{{ $sizes }}">
+    {{- end -}}
+
+    {{- /* Fallback image */ -}}
+    {{- $fallback := $img.Resize (printf "%dx" $width) -}}
+    <img src="{{ $fallback.RelPermalink }}"
+         {{ with .alt }}alt="{{ . }}"{{ end }}
+         {{ with .class }}class="{{ . }}"{{ end }}
+         loading="{{ .loading | default "lazy" }}"
+         width="{{ $width }}"
+         {{ with $height }}height="{{ . }}"{{ end }}
+         sizes="{{ $sizes }}">
+  </picture>
+
+{{- else -}}
+  {{- /* Remote image fallback */ -}}
+  <img src="{{ .src }}"
+       {{ with .alt }}alt="{{ . }}"{{ end }}
+       {{ with .class }}class="{{ . }}"{{ end }}
+       loading="{{ .loading | default "lazy" }}"
+       {{ with .width }}width="{{ . }}"{{ end }}
+       {{ with .height }}height="{{ . }}"{{ end }}>
+{{- end -}}

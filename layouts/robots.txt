@@ -1,0 +1,36 @@
+User-agent: *
+Allow: /
+
+# Crawl-delay: 10
+
+# Sitemaps
+Sitemap: {{ .Site.BaseURL }}/sitemap.xml
+
+# Disallow admin and other sensitive areas
+Disallow: /admin/
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /search/
+Disallow: /*?s=
+Disallow: /*&s=
+Disallow: /search
+Disallow: /assets/
+Disallow: /includes/
+Disallow: /app/
+Disallow: /*.js$
+Disallow: /*.css$
+
+# Allow Google Image Search to index all images
+User-agent: Googlebot-Image
+Allow: /*
+Disallow: /search
+
+# Block AI bots
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /

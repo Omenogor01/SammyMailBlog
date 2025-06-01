@@ -1,0 +1,75 @@
+{
+  "name": "SammyMail",
+  "short_name": "SammyMail",
+  "description": "Expert insights on email technology, deliverability, and authentication",
+  "start_url": "/?source=pwa",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait",
+  "categories": ["technology", "email", "development"],
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/safari-pinned-tab.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "monochrome"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop.png",
+      "sizes": "1280x800",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/screenshots/mobile.png",
+      "sizes": "375x667",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Latest Posts",
+      "short_name": "Posts",
+      "description": "View the latest articles",
+      "url": "/posts?source=pwa"
+    },
+    {
+      "name": "About",
+      "short_name": "About",
+      "description": "Learn about SammyMail",
+      "url": "/about?source=pwa"
+    },
+    {
+      "name": "Contact",
+      "short_name": "Contact",
+      "description": "Get in touch",
+      "url": "/contact?source=pwa"
+    }
+  ],
+  "related_applications": [
+    {
+      "platform": "webapp",
+      "url": "https://sammymail.netlify.app/site.webmanifest"
+    }
+  ],
+  "prefer_related_applications": false,
+  "scope": "/",
+  "id": "/?source=pwa",
+  "lang": "en-US",
+  "dir": "ltr"
+}

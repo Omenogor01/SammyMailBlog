@@ -4,15 +4,20 @@ title = 'SammyMail | Email Technology Insights'
 theme = 'PaperMod'
 
 # Site identity
-title = 'SammyMail'
 description = 'Expert insights on email technology, deliverability, and authentication'
 
-# Author information
+# Author information (old format - keeping for backward compatibility)
 [author]
   name = 'Sammy'
   email = 'contact@sammymail.com'
   bio = 'Email technology expert and consultant'
   avatar = '/images/avatar.jpg'  # Add your avatar image to static/images/avatar.jpg
+
+[params.author]
+  name = 'Sammy'
+  email = 'contact@sammymail.com'
+  bio = 'Email technology expert and consultant'
+  avatar = '/images/avatar.jpg'
 
 # Site settings
 [pagination]

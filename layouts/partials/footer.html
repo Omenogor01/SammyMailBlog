@@ -16,19 +16,19 @@
         {{ .Site.Params.description | default "Expert insights and resources on email technology, deliverability, and best practices." }}
       </p>
       <div class="footer-social">
-        {{ with .Site.Params.social }}
+        {{ with .Site.Params.socialIcons }}
           {{ range . }}
             <a href="{{ .url }}" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="{{ .name }}">
-              <i class="fab fa-{{ .icon }}"></i>
+              <i class="fab fa-{{ .name }}"></i>
             </a>
           {{ end }}
         {{ else }}
           <!-- Default social links if none specified -->
-          <a href="https://twitter.com/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-            <i class="fab fa-twitter"></i>
-          </a>
           <a href="https://github.com/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
             <i class="fab fa-github"></i>
+          </a>
+          <a href="https://linkedin.com/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <i class="fab fa-linkedin"></i>
           </a>
           <a href="https://linkedin.com/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
             <i class="fab fa-linkedin-in"></i>
@@ -60,9 +60,9 @@
     <div class="footer-links">
       <h3>Categories</h3>
       <ul>
-        {{ range first 5 (where .Site.Pages "Section" "blog").GroupBy "Section" }}
-          {{ $section := .Key }}
-          {{ range first 5 .Pages }}
+        {{ $categories := .Site.Taxonomies.categories.ByCount }}
+        {{ range first 5 $categories }}
+          {{ with .Page }}
             <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
           {{ end }}
         {{ end }}
